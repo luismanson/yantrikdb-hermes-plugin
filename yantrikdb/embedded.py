@@ -420,7 +420,8 @@ class EmbeddedYantrikDBClient:
         #        Requires YANTRIKDB_EMBEDDING_DIM (user knows their model).
         #   2. YANTRIKDB_EMBEDDER_MODEL2VEC (built-in model2vec loader, v0.4.2+)
         #      → Model2VecEmbedder(model_name); dim auto-probed.
-        #        Install: pip install 'yantrikdb-hermes-plugin[model2vec]'.
+        #        model2vec is a hard dependency (plugin.yaml pip_dependencies);
+        #        installed with the plugin, survives env regeneration.
         #   3. YANTRIKDB_EMBEDDER_HF (built-in sentence-transformers loader, v0.4.2+)
         #      → SentenceTransformerEmbedder(model_name); dim auto-probed.
         #        Install: pip install 'yantrikdb-hermes-plugin[sentence-transformers]'.

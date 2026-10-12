@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "yantrikdb-hermes-plugin"
-version = "0.27.1"
+version = "0.27.2"
 description = "Self-maintaining memory plugin for Hermes Agent — embedded YantrikDB engine, ~10 MB, no server, no token, no GPU. Canonicalizes duplicates, surfaces contradictions, ranks with recency awareness, and explains recall."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -44,6 +44,7 @@ classifiers = [
 dependencies = [
   "yantrikdb>=0.12.1,!=0.15.0,!=0.15.1,!=0.15.2,<0.24.0",
   "requests>=2.31,<3.0.0",
+  "model2vec>=0.3,<1.0.0",
 ]
 
 [project.optional-dependencies]
@@ -53,15 +54,12 @@ dev = [
   "mypy>=1.10",
   "types-requests",
 ]
-# v0.4.2 builtin embedder loaders. Each extra pulls in only what its
-# loader actually needs; the default install stays slim. Pick one based
-# on the embedder family you want to use (model2vec for the lightweight
-# potion family including potion-multilingual-128M; sentence-transformers
-# for the broader HF ecosystem). Both can be installed together if you
-# want to A/B different embedders without uninstalling.
-model2vec = [
-  "model2vec>=0.3,<1.0.0",
-]
+# v0.4.2 builtin embedder loaders. model2vec is now a hard dependency
+# (declared above in [project].dependencies and in plugin.yaml
+# pip_dependencies) because it is small and torch-free; it survives
+# Hermes' uv-managed environment regeneration (#92). sentence-transformers
+# pulls in PyTorch, so it stays optional — install only if you use
+# YANTRIKDB_EMBEDDER_HF.
 sentence-transformers = [
   "sentence-transformers>=2.7,<6.0.0",
 ]
@@ -156,7 +154,7 @@ exclude = ["reference/", "tests/", "^__init__\\.py$"]
 # matching `## [X.Y.Z] — YYYY-MM-DD — Summary` header. The CI `version-sync`
 # job blocks merge if the three sources drift.
 [tool.bumpversion]
-current_version = "0.27.1"
+current_version = "0.27.2"
 commit = false       # let the human author the commit message + body
 tag = false          # tag via `gh release create`, not on bump
 allow_dirty = true

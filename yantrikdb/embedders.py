@@ -74,9 +74,12 @@ class Model2VecEmbedder:
             from model2vec import StaticModel  # type: ignore[import-untyped]
         except ImportError as e:
             raise YantrikDBError(
-                "YANTRIKDB_EMBEDDER_MODEL2VEC requires the `model2vec` package. "
-                "Install with: pip install 'yantrikdb-hermes-plugin[model2vec]' "
-                "  (or: pip install model2vec)"
+                "YANTRIKDB_EMBEDDER_MODEL2VEC requires the `model2vec` package, "
+                "which is now a hard dependency declared in the plugin manifest "
+                "(plugin.yaml `pip_dependencies`). If it is missing, the plugin "
+                "environment was regenerated (e.g. by `hermes update`) into an "
+                "interpreter that cannot see it — reinstall with: "
+                "pip install yantrikdb-hermes-plugin."
             ) from e
         self.model_name = model_name
         try:

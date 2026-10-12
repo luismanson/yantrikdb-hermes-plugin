@@ -60,8 +60,11 @@ class TestRuntimeDependencies:
             "side. Add a ceiling you have actually tested against."
         )
 
-    @pytest.mark.parametrize("extra", ["optional:model2vec",
-                                       "optional:sentence-transformers"])
+    # model2vec is now a hard runtime dependency (declared in plugin.yaml's
+    # pip_dependencies and pyproject.toml's [project] dependencies), so it is
+    # no longer an optional extra; only sentence-transformers (which pulls
+    # PyTorch) remains optional. See issue #92.
+    @pytest.mark.parametrize("extra", ["optional:sentence-transformers"])
     def test_optional_feature_extras_are_bounded_too(self, extra):
         """Extras install into the user's environment exactly like runtime deps
         do — a broken embedder loader is not less broken for being optional."""

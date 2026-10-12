@@ -3,6 +3,22 @@
 All notable changes to the YantrikDB Hermes memory plugin.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); semantic versioning. Distributed standalone per Hermes maintainer guidance (PR #9989 closed 2026-05-13).
 
+## [0.27.2] — 2026-10-12 — model2vec is now a manifest hard dependency (fixes #92)
+
+### model2vec is now a manifest dependency (#92)
+
+- `model2vec` is now declared as a hard runtime dependency in `plugin.yaml`'s
+  `pip_dependencies` (and `pyproject.toml`'s `[project] dependencies`), so it is
+  installed alongside the plugin and **survives** Hermes' uv-managed environment
+  regeneration — fixing the silent drop on `hermes update` reported in #92.
+- `sentence-transformers` still pulls in PyTorch, so it remains an **optional**
+  extra (`pip install 'yantrikdb-hermes-plugin[sentence-transformers]'`); only
+  users who set `YANTRIKDB_EMBEDDER_HF` need it.
+- `Model2VecEmbedder`'s missing-dependency error no longer points at the
+  (now-removed) `[model2vec]` extra; it names the manifest and the `hermes update`
+  regeneration as the cause.
+- README footprint note updated: the default install now includes `model2vec`.
+
 ## [0.27.1] — 2026-10-05 — a missing embedder dependency says which interpreter looked where
 
 ### A missing embedder dependency now says which interpreter looked where (#92)
@@ -12,7 +28,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); semanti
   different environment" or "user-site ignored under `-I`".
 - README: embedder dependencies (`model2vec`, `sentence-transformers`, whatever a custom class
   imports) are not in the manifest, so Hermes drops hand-installed ones when it regenerates the
-  plugin environment. Making them a manifest dependency is still open.
+  plugin environment. model2vec has **since** been made a manifest hard dependency (#92 fix in
+  v0.27.2); only sentence-transformers and custom-class imports remain non-manifest.
 
 ## [0.27.0] — 2026-09-19 — a multiplexed gateway keeps each profile's YantrikDB settings to itself
 
