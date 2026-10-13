@@ -516,9 +516,9 @@ YANTRIKDB_INTEGRATION_TOKEN=ydb_... \
 | v0.10.0 | 2026-07-25 | The install is the product |
 | v0.13.0 | 2026-08-05 | Built for fleets, not single agents |
 | v0.26.0 | 2026-09-17 | Self-maintenance (`think()`) runs again on the default backend |
-|| v0.27.2 | 2026-10-12 | `model2vec` declared as a manifest hard dependency so it survives Hermes env regeneration (fixes #92) |
-|| v0.27.1 | 2026-10-05 | Embedder ImportErrors name `sys.executable`/`sys.path` |
-|| v0.27.0 | 2026-09-19 | Multiplexed gateway keeps each profile's settings separate |
+| v0.27.2 | 2026-10-12 | `model2vec` declared as a manifest hard dependency so it survives Hermes env regeneration (fixes #92) |
+| v0.27.1 | 2026-10-05 | Embedder ImportErrors name `sys.executable`/`sys.path` |
+| v0.27.0 | 2026-09-19 | Multiplexed gateway keeps each profile's settings separate |
 
 58 tagged releases in total; every one is in the [CHANGELOG](yantrikdb/CHANGELOG.md).
 
