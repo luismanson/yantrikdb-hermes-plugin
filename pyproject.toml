@@ -57,12 +57,16 @@ dev = [
 # v0.4.2 builtin embedder loaders. model2vec is now a hard dependency
 # (declared above in [project].dependencies and in plugin.yaml
 # pip_dependencies) because it is small and torch-free; it survives
-# Hermes' uv-managed environment regeneration (#92). sentence-transformers
-# pulls in PyTorch, so it stays optional — install only if you use
-# YANTRIKDB_EMBEDDER_HF.
-sentence-transformers = [
-  "sentence-transformers>=2.7,<6.0.0",
-]
+# Hermes' uv-managed environment regeneration (#92).
+#
+# sentence-transformers EXTRA REMOVIDO (oct-2026): uv lock resuelve TODOS los
+# extras de todos los miembros del workspace (lock universal), y
+# sentence-transformers → torch no tiene wheels para py3.14 → el lock entero
+# explota aunque nadie pida el extra (rompió el update a hermes 0.22.5 y el
+# updater auto-disableó el plugin). Nuestro embedder es custom
+# (yantrikdb_fp_embedder.FingerprintedM2V, model2vec) — el loader HF no se
+# usa. Si algún día se necesitara, reinstalar el extra y verificar
+# `hermes pm install` antes de re-enablear.
 
 [project.urls]
 Homepage = "https://github.com/yantrikos/yantrikdb-hermes-plugin"
